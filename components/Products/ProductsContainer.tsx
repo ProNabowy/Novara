@@ -1,73 +1,31 @@
+"use client";
+import { Product } from "@/network/models/Product";
+import Pagination from "@/ui/Pagination";
 import ProductCard from "@/ui/ProductCard";
 
-const product = {
-	id: 121,
-	title: "iPhone 5s",
-	description:
-		"The iPhone 5s is a classic smartphone known for its compact design and advanced features during its release. While it's an older model, it still provides a reliable user experience.",
-	category: "smartphones",
-	price: 199.99,
-	discountPercentage: 11.85,
-	rating: 3.92,
-	stock: 65,
-	tags: ["smartphones", "apple"],
-	brand: "Apple",
-	sku: "AZ1L68SM",
-	weight: 4,
-	dimensions: {
-		width: 8.49,
-		height: 25.34,
-		depth: 18.12,
-	},
-	warrantyInformation: "1 week warranty",
-	shippingInformation: "Ships in 1 week",
-	availabilityStatus: "In Stock",
-	reviews: [
-		{
-			rating: 4,
-			comment: "Highly impressed!",
-			date: "2024-05-23T08:56:21.625Z",
-			reviewerName: "Wyatt Perry",
-			reviewerEmail: "wyatt.perry@x.dummyjson.com",
-		},
-		{
-			rating: 5,
-			comment: "Awesome product!",
-			date: "2024-05-23T08:56:21.625Z",
-			reviewerName: "Olivia Anderson",
-			reviewerEmail: "olivia.anderson@x.dummyjson.com",
-		},
-		{
-			rating: 4,
-			comment: "Highly recommended!",
-			date: "2024-05-23T08:56:21.625Z",
-			reviewerName: "Mateo Nguyen",
-			reviewerEmail: "mateo.nguyen@x.dummyjson.com",
-		},
-	],
-	returnPolicy: "No return policy",
-	minimumOrderQuantity: 2,
-	meta: {
-		createdAt: "2024-05-23T08:56:21.625Z",
-		updatedAt: "2024-05-23T08:56:21.625Z",
-		barcode: "2903942810911",
-		qrCode: "https://assets.dummyjson.com/public/qr-code.png",
-	},
-	images: [
-		"https://cdn.dummyjson.com/products/images/smartphones/iPhone%205s/1.png",
-		"https://cdn.dummyjson.com/products/images/smartphones/iPhone%205s/2.png",
-		"https://cdn.dummyjson.com/products/images/smartphones/iPhone%205s/3.png",
-	],
-	thumbnail:
-		"https://cdn.dummyjson.com/products/images/smartphones/iPhone%205s/thumbnail.png",
-};
-
-export default function ProductsContainer() {
+export default function ProductsContainer({
+	products,
+	total,
+	skip,
+	limit,
+}: {
+	products: Product[];
+	total: number;
+	skip: number;
+	limit: number;
+}) {
 	return (
 		<div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-			<ProductCard {...product} />
-			<ProductCard {...product} stock={0} />
-			<ProductCard {...product} discountPercentage={0} />
+			{products.map((product) => (
+				<ProductCard key={product.id} {...product} />
+			))}
+			<div className="col-span-3 flex items-center justify-center">
+				<Pagination
+					currentPage={skip}
+					totalPages={total}
+					onPageChange={() => {}}
+				/>
+			</div>
 		</div>
 	);
 }
