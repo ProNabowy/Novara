@@ -10,43 +10,35 @@ import {
 	Units,
 	X,
 } from "@/icons";
+import type { Product } from "@/network/models/Product";
 import Image from "next/image";
 import { useState } from "react";
 
-interface Review {
-	rating: number;
-	comment: string;
-	date: string;
-	reviewerName: string;
-	reviewerEmail: string;
-}
-
-interface ProductCardProps {
-	id: number;
-	title: string;
-	description: string;
-	price: number;
-	discountPercentage: number;
-	rating: number;
-	stock: number;
-	brand: string;
-	sku: string;
-	thumbnail: string;
-	images: string[];
-	availabilityStatus: string;
-	reviews: Review[];
-	category: string;
-	warrantyInformation: string;
-	shippingInformation: string;
-	minimumOrderQuantity: number;
-}
+type ProductCardProps = Pick<
+	Product,
+	| "id"
+	| "title"
+	| "description"
+	| "price"
+	| "discountPercentage"
+	| "stock"
+	| "brand"
+	| "sku"
+	| "thumbnail"
+	| "images"
+	| "availabilityStatus"
+	| "reviews"
+	| "category"
+	| "warrantyInformation"
+	| "shippingInformation"
+	| "minimumOrderQuantity"
+>;
 
 export default function ProductCard({
 	title,
 	description,
 	price,
 	discountPercentage,
-	rating,
 	stock,
 	brand,
 	sku,
