@@ -1,3 +1,5 @@
 export { default as Bars } from './Bars'
 export { default as Cart } from './Cart'
 export { default as Logo } from './Logo'
+export { default as Minus } from './Minus'
+export { default as Plus } from './Plus'

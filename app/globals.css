@@ -2,12 +2,19 @@
 
 @theme {
     --color-primary-base: #a39079;
+    --color-primary-light: #0000001a;
     --color-dark-base: #170A05;
+}
+
+* {
+    outline: none;
+    text-decoration: none;
 }
 
 html,
 body {
     height: 100%;
+    background-color: #E7E2DB;
 }
 
 button {
