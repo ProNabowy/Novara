@@ -12,7 +12,7 @@ export default function ResponsiveHeader({ routes }: { routes: Route[] }) {
 	return (
 		<>
 			<button onClick={() => setOpen((perv) => !perv)}>
-				<Bars className="size-8 fill-white" />
+				<Bars className="size-8 fill-white md:hidden" />
 			</button>
 
 			<Modal open={open} anchor="right" onClose={() => setOpen(false)}>

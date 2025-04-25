@@ -11,11 +11,10 @@ const nextConfig: NextConfig = {
 	},
 	images: {
 		remotePatterns: [
-			// {
-			// 	protocol: "https",
-			// 	hostname: "**.amazonaws.com",
-			// 	port: "",
-			// },
+			{
+				protocol: "https",
+				hostname: "cdn.dummyjson.com",
+			},
 		],
 	},
 };

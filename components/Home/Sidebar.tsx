@@ -1,3 +1,4 @@
+import { Magnifying } from "@/icons";
 import Note from "@/ui/Note";
 import CategoryOptions from "./CategoryOptions";
 import SortOptions from "./SortOptions";
@@ -14,7 +15,7 @@ export default function Sidebar() {
 					className="w-px flex-1"
 					placeholder={"What are you looking for?"}
 				/>
-				<i className="fa-regular fa-magnifying-glass" />
+				<Magnifying className="size-4 fill-gray-600" />
 			</div>
 
 			<Note>
