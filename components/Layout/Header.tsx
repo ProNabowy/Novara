@@ -4,9 +4,9 @@ import ResponsiveHeader from "./ResponsiveHeader";
 
 const routes = [
 	{ name: "Products", href: "/products" },
-	{ name: "Sells", href: "/sells" },
-	{ name: "Buy", href: "/buy" },
-	{ name: "Contact", href: "/contact" },
+	{ name: "Sells", href: "/products" },
+	{ name: "Buy", href: "/products" },
+	{ name: "Contact", href: "/products" },
 ];
 
 export default function Header() {
@@ -33,7 +33,7 @@ export default function Header() {
 					<div className="flex items-center gap-6">
 						<Cart className="h-7 w-7 fill-white" />
 
-						<Link href={"/login"}>
+						<Link href={"/products"}>
 							<button className="text-dark-base rounded-full bg-white px-6 py-2.5 font-normal">
 								Login
 							</button>

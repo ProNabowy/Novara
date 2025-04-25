@@ -12,13 +12,13 @@ export default async function Home({
 }) {
 	const categories = await fetchCategories();
 
-	const skip = Number(searchParams.skip) || 0;
+	const skip = Number((await searchParams).skip) || 0;
 
-	const category = searchParams.category as string;
+	const category = (await searchParams).category as string;
 
-	const sortBy = searchParams.sortBy as string;
+	const sortBy = (await searchParams).sortBy as string;
 
-	const searchTerm = searchParams.search as string;
+	const searchTerm = (await searchParams).search as string;
 
 	let products;
 

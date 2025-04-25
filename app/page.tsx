@@ -12,13 +12,13 @@ export default async function Home({
 }) {
 	const categories = await fetchCategories();
 
-	const skip = Number(searchParams.skip) || 0;
+	const skip = Number((await searchParams).skip) || 0;
 
-	const category = searchParams.category as string;
+	const category = (await searchParams).category as string;
 
-	const sortBy = searchParams.sortBy as string;
+	const sortBy = (await searchParams).sortBy as string;
 
-	const searchTerm = searchParams.search as string;
+	const searchTerm = (await searchParams).search as string;
 
 	let products;
 
@@ -33,7 +33,7 @@ export default async function Home({
 	return (
 		<section className="flex flex-col gap-10 py-10">
 			<h2 className="text-center text-4xl font-bold">All Products</h2>
-			<div className="container grid h-full grid-cols-[25%_1fr] items-start gap-10">
+			<div className="container grid h-full grid-cols-1 items-start gap-5 lg:grid-cols-[30%_1fr] xl:grid-cols-[25%_1fr] xl:gap-10">
 				<Sidebar
 					categories={categories.data}
 					category={category}

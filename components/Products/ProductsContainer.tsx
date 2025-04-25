@@ -35,16 +35,18 @@ export default function ProductsContainer({
 	};
 
 	return (
-		<div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+		<div className="grid grid-cols-1 gap-5 sm:grid-cols-2 2xl:grid-cols-3">
 			{products.map((product) => (
 				<ProductCard key={product.id} {...product} />
 			))}
-			<div className="col-span-3 flex items-center justify-center">
-				<Pagination
-					currentPage={currentPage || 1}
-					totalPages={totalPages}
-					onPageChange={handlePageChange}
-				/>
+			<div className="flex grid-cols-1 items-center justify-center sm:col-span-2 2xl:col-span-3">
+				{totalPages ? (
+					<Pagination
+						currentPage={currentPage || 1}
+						totalPages={totalPages}
+						onPageChange={handlePageChange}
+					/>
+				) : null}
 			</div>
 		</div>
 	);
