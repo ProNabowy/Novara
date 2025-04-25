@@ -20,9 +20,11 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
-			<body className={`${philosopher.variable} antialiased`}>
-				<Layout>{children}</Layout>
+		<html lang="en" className="h-full">
+			<body className={`${philosopher.variable} h-full antialiased`}>
+				<Layout>
+					<main className="h-[calc(100vh-90px)]">{children}</main>
+				</Layout>
 			</body>
 		</html>
 	);

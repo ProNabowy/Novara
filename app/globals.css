@@ -5,6 +5,11 @@
     --color-dark-base: #170A05;
 }
 
+html,
+body {
+    height: 100%;
+}
+
 button {
     cursor: pointer;
 }
