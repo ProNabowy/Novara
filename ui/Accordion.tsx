@@ -8,13 +8,14 @@ type Props = {
 };
 
 export default function Accordion({ title = "", children }: Props) {
-	const [visible, setVisible] = useState(true);
+	const [visible, setVisible] = useState(false);
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [contentHeight, setContentHeight] = useState(0);
 
 	useEffect(() => {
 		if (contentRef.current) {
-			setContentHeight(contentRef.current.scrollHeight);
+			setContentHeight(contentRef.current.scrollHeight + 24);
+			setVisible(true);
 		}
 	}, [children]);
 

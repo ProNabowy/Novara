@@ -1,7 +1,6 @@
-import Accordion from "@/ui/Accordion";
 import Note from "@/ui/Note";
-import Radio from "@/ui/Radio";
-import SortOptions from "../SortOptions";
+import CategoryOptions from "./CategoryOptions";
+import SortOptions from "./SortOptions";
 
 export default function Sidebar() {
 	return (
@@ -19,18 +18,11 @@ export default function Sidebar() {
 			</div>
 
 			<Note>
-				Click the button Apply below under the filters to submit your
-				search or filter changes.
+				There&apos;s a debounce on the search input to prevent
+				unnecessary API calls.
 			</Note>
 
-			<Accordion title="Categories">
-				<ul>
-					<Radio label="Category" size="medium" />
-					<li>Category 1</li>
-					<li>Category 1</li>
-					<li>Category 1</li>
-				</ul>
-			</Accordion>
+			<CategoryOptions />
 
 			<SortOptions />
 		</aside>
