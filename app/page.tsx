@@ -5,34 +5,59 @@ import {
 	fetchProducts,
 	fetchProductsBySearch,
 } from "@/network/apis/products/products.apis";
-export default async function Home({
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "All Products - Novara Products",
+	description:
+		"Browse our complete collection of high-quality products. Filter by category and find exactly what you're looking for.",
+	openGraph: {
+		title: "All Products - Novara Products",
+		description: "Browse our complete collection of high-quality products",
+		type: "website",
+	},
+};
+
+export default async function ProductsPage({
 	searchParams,
 }: {
-	searchParams: { [key: string]: string | string[] | undefined };
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+	const params = await searchParams;
+	const skip = Number(params.skip) || 0;
+	const category = Array.isArray(params.category)
+		? params.category[0]
+		: params.category || "";
+	const sortBy = Array.isArray(params.sortBy)
+		? params.sortBy[0]
+		: params.sortBy || "";
+	const searchTerm = Array.isArray(params.search)
+		? params.search[0]
+		: params.search || "";
+
 	const categories = await fetchCategories();
-
-	const skip = Number((await searchParams).skip) || 0;
-
-	const category = (await searchParams).category as string;
-
-	const sortBy = (await searchParams).sortBy as string;
-
-	const searchTerm = (await searchParams).search as string;
-
 	let products;
+	let pageTitle = "All Products";
 
 	switch (true) {
 		case Boolean(searchTerm):
 			products = await fetchProductsBySearch(searchTerm, skip);
+			pageTitle = `Search Results for "${searchTerm}"`;
+			break;
+		case Boolean(category):
+			products = await fetchProducts(skip, category, sortBy);
+			pageTitle = `${category} Products`;
 			break;
 		default:
 			products = await fetchProducts(skip, category, sortBy);
 	}
 
 	return (
-		<section className="flex flex-col gap-10 py-10">
-			<h2 className="text-center text-4xl font-bold">All Products</h2>
+		<section
+			className="flex flex-col gap-10 py-10"
+			aria-label="Products section"
+		>
+			<h1 className="text-center text-4xl font-bold">{pageTitle}</h1>
 			<div className="container grid h-full grid-cols-1 items-start gap-5 lg:grid-cols-[30%_1fr] xl:grid-cols-[25%_1fr] xl:gap-10">
 				<Sidebar
 					categories={categories.data}

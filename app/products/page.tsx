@@ -21,14 +21,21 @@ export const metadata: Metadata = {
 export default async function ProductsPage({
 	searchParams,
 }: {
-	searchParams: { [key: string]: string | string[] | undefined };
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-	const categories = await fetchCategories();
-	const skip = Number((await searchParams).skip) || 0;
-	const category = (await searchParams).category as string;
-	const sortBy = (await searchParams).sortBy as string;
-	const searchTerm = (await searchParams).search as string;
+	const params = await searchParams;
+	const skip = Number(params.skip) || 0;
+	const category = Array.isArray(params.category)
+		? params.category[0]
+		: params.category || "";
+	const sortBy = Array.isArray(params.sortBy)
+		? params.sortBy[0]
+		: params.sortBy || "";
+	const searchTerm = Array.isArray(params.search)
+		? params.search[0]
+		: params.search || "";
 
+	const categories = await fetchCategories();
 	let products;
 	let pageTitle = "All Products";
 
