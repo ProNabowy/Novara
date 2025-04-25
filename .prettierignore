@@ -1,0 +1,7 @@
+.next
+cypress
+devops
+.husky
+node_modules
+.gitlab-ci.yml
+.prettierrc
