@@ -2,10 +2,17 @@ import ProductsContainer from "@/components/Products/ProductsContainer";
 import Sidebar from "@/components/Products/Sidebar";
 import { fetchCategories } from "@/network/apis/categories/categories";
 import { fetchProducts } from "@/network/apis/products/products.apis";
-export default async function Home() {
+export default async function Home({
+	searchParams,
+}: {
+	searchParams: { [key: string]: string | string[] | undefined };
+}) {
 	const categories = await fetchCategories();
-	const products = await fetchProducts();
-	console.log(products.data);
+
+	const skip = Number(searchParams.skip) || 0;
+
+	const products = await fetchProducts(skip);
+
 	return (
 		<section className="flex flex-col gap-10 py-10">
 			<h2 className="text-center text-4xl font-bold">All Products</h2>
@@ -14,7 +21,6 @@ export default async function Home() {
 				<ProductsContainer
 					products={products.data.products}
 					total={products.data.total}
-					skip={products.data.skip}
 					limit={products.data.limit}
 				/>
 			</div>

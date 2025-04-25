@@ -3,8 +3,8 @@ import { SuccessResponse } from "@/types/responses";
 import { apis } from "@/utils/constants/apis";
 import { FetchProductsResponse } from "./types";
 
-export const fetchProducts = async () => {
+export const fetchProducts = async (skip: number) => {
 	return await axios.get<SuccessResponse<FetchProductsResponse>>(
-		apis.products.list
+		apis.products.list(skip)
 	);
 };

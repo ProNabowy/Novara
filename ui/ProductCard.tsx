@@ -78,12 +78,14 @@ export default function ProductCard({
 						{discountPercentage > 0 && (
 							<span className="flex items-center gap-1 rounded-full bg-red-500/90 px-3 py-1 text-xs text-white backdrop-blur-sm">
 								<Tag className="size-4 fill-white" />
-								{discountPercentage}% OFF
+								<span className="line-clamp-1">
+									{discountPercentage}% OFF
+								</span>
 							</span>
 						)}
-						<span className="flex items-center gap-1 rounded-full bg-blue-500/90 px-3 py-1 text-xs text-white backdrop-blur-sm">
+						<p className="line-clamp-1 gap-1 rounded-full bg-blue-500/90 px-3 py-1 text-xs text-white backdrop-blur-sm">
 							{category}
-						</span>
+						</p>
 					</div>
 					<button
 						onClick={() => setIsFavorite(!isFavorite)}
