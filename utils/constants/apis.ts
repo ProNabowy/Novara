@@ -1,9 +1,10 @@
 export const apis = {
 	products: {
-		list: (skip: number) => `/products?limit=9&skip=${skip}`,
+		list: (skip: number, category?: string, sortBy?: string) =>
+			`/products${category ? `/category/${category}` : ""}?limit=9&skip=${skip}${sortBy ? `&sortBy=title&order=${sortBy}` : ""}`,
 		details: "/products/:id",
-		byCategory: (category: string) => `/products/category/${category}`,
-		search: (query: string) => `/products/search?q=${query}`,
+		search: (search: string, skip: number) =>
+			`/products/search?q=${search}&limit=9&skip=${skip}`,
 	},
 	categories: "products/category-list",
 };

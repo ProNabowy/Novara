@@ -1,71 +1,50 @@
-"use client";
-import CategorySidebar from "@/components/Products/CategorySidebar";
 import ProductsContainer from "@/components/Products/ProductsContainer";
-import SortOptions from "@/components/Products/SortOptions";
-import { fetchProducts } from "@/network/apis/products/products.apis";
-import { Product } from "@/network/models/Product";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import Sidebar from "@/components/Products/Sidebar";
+import { fetchCategories } from "@/network/apis/categories/categories";
+import {
+	fetchProducts,
+	fetchProductsBySearch,
+} from "@/network/apis/products/products.apis";
+export default async function Home({
+	searchParams,
+}: {
+	searchParams: { [key: string]: string | string[] | undefined };
+}) {
+	const categories = await fetchCategories();
 
-export default function ProductsPage() {
-	const searchParams = useSearchParams();
-	const page = Number(searchParams.get("page")) || 1;
-	const category = searchParams.get("category") || "all";
-	const sortBy = searchParams.get("sortBy") || "title";
-	const sortOrder = (searchParams.get("sortOrder") || "asc") as
-		| "asc"
-		| "desc";
-	const limit = 9;
+	const skip = Number(searchParams.skip) || 0;
 
-	const [products, setProducts] = useState<Product[]>([]);
-	const [total, setTotal] = useState(0);
-	const [isLoading, setIsLoading] = useState(false);
+	const category = searchParams.category as string;
 
-	useEffect(() => {
-		const loadProducts = async () => {
-			setIsLoading(true);
-			try {
-				const response = await fetchProducts({
-					page,
-					limit,
-					...(category !== "all" && { category }),
-					sortBy,
-					sortOrder,
-				});
-				setProducts(response.data.data.products);
-				setTotal(response.data.data.total);
-			} catch (error) {
-				console.error("Error fetching products:", error);
-			} finally {
-				setIsLoading(false);
-			}
-		};
+	const sortBy = searchParams.sortBy as string;
 
-		loadProducts();
-	}, [page, category, sortBy, sortOrder, limit]);
+	const searchTerm = searchParams.search as string;
+
+	let products;
+
+	switch (true) {
+		case Boolean(searchTerm):
+			products = await fetchProductsBySearch(searchTerm, skip);
+			break;
+		default:
+			products = await fetchProducts(skip, category, sortBy);
+	}
 
 	return (
-		<div className="container mx-auto px-4 py-8">
-			<h1 className="mb-8 text-3xl font-bold">Products</h1>
-			<div className="flex gap-8">
-				<CategorySidebar selectedCategory={category} />
-				<div className="flex-1">
-					<div className="mb-6 flex justify-end">
-						<SortOptions currentSort={`${sortBy}-${sortOrder}`} />
-					</div>
-					{isLoading ? (
-						<div className="flex items-center justify-center">
-							<div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
-						</div>
-					) : (
-						<ProductsContainer
-							products={products}
-							total={total}
-							limit={limit}
-						/>
-					)}
-				</div>
+		<section className="flex flex-col gap-10 py-10">
+			<h2 className="text-center text-4xl font-bold">All Products</h2>
+			<div className="container grid h-full grid-cols-[25%_1fr] items-start gap-10">
+				<Sidebar
+					categories={categories.data}
+					category={category}
+					sortBy={sortBy}
+				/>
+				<ProductsContainer
+					products={products.data.products}
+					total={products.data.total}
+					limit={products.data.limit}
+				/>
 			</div>
-		</div>
+		</section>
 	);
 }

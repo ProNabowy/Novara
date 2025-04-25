@@ -1,32 +1,29 @@
-import { Magnifying } from "@/icons";
 import Note from "@/ui/Note";
 import CategoryOptions from "./CategoryOptions";
+import Search from "./Search";
 import SortOptions from "./SortOptions";
 
-export default function Sidebar({ categories }: { categories: string[] }) {
-
+export default function Sidebar({
+	categories,
+	category,
+	sortBy,
+}: {
+	categories: string[];
+	category: string;
+	sortBy: string;
+}) {
 	return (
 		<aside className="space-y-3 rounded-sm">
-			<div className="border-primary-light flex items-center gap-2 rounded-full border bg-white px-4 py-2">
-				<label htmlFor="search" className="sr-only"></label>
-				<input
-					type="text"
-					name="search"
-					id="search"
-					className="w-px flex-1"
-					placeholder={"What are you looking for?"}
-				/>
-				<Magnifying className="size-4 fill-gray-600" />
-			</div>
+			<Search />
 
 			<Note>
 				There&apos;s a debounce on the search input to prevent
 				unnecessary API calls.
 			</Note>
 
-			<CategoryOptions categories={categories} />
+			<CategoryOptions categories={categories} category={category} />
 
-			<SortOptions />
+			<SortOptions sortBy={sortBy} />
 		</aside>
 	);
 }

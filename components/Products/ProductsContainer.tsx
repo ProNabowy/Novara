@@ -21,7 +21,7 @@ export default function ProductsContainer({
 
 	const totalPages =
 		Math.ceil(total / 9) * 9 > total
-			? Math.ceil(total / 9) - 1
+			? Math.ceil(total / 9)
 			: Math.ceil(total / 9);
 
 	const handlePageChange = (page: number) => {
@@ -29,7 +29,7 @@ export default function ProductsContainer({
 
 		params.set("page", page.toString() || "1");
 
-		params.set("skip", (page * limit).toString());
+		params.set("skip", ((page - 1) * limit).toString());
 
 		router.push(`?${params.toString()}`);
 	};

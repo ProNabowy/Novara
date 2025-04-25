@@ -1,0 +1,50 @@
+"use client";
+import { useDebounce } from "@/hooks/useDebounce";
+import { Magnifying } from "@/icons";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+export default function Search() {
+	const [search, setSearch] = useState("");
+
+	const debouncedSearch = useDebounce(search, 500);
+
+	const searchParams = useSearchParams();
+
+	const router = useRouter();
+
+	const handleSearchQuery = () => {
+		if (debouncedSearch) {
+			router.push(`?search=${debouncedSearch}&page=1&skip=0`);
+		} else {
+			if (searchParams.get("search")) {
+				const params = new URLSearchParams(searchParams.toString());
+				params.delete("search");
+				router.push(`?${params.toString()}`);
+			}
+		}
+	};
+
+	useEffect(() => {
+		handleSearchQuery();
+		return () => {};
+	}, [debouncedSearch]);
+
+	return (
+		<div className="border-primary-light flex items-center gap-2 rounded-full border bg-white px-4 py-2">
+			<label htmlFor="search" className="sr-only"></label>
+			<input
+				type="text"
+				name="search"
+				id="search"
+				className="w-px flex-1"
+				placeholder={"What are you looking for?"}
+				value={search}
+				onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+					setSearch(event.target.value)
+				}
+			/>
+			<Magnifying className="size-4 fill-gray-600" />
+		</div>
+	);
+}
