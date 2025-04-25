@@ -1,11 +1,10 @@
 export type AvailableCodes = 200 | 400 | 404 | 403 | 422 | 500 | 401 | 402;
 
 export type SuccessResponse<T> = {
-	data: T;
 	code: AvailableCodes;
 	message: string;
 	errors: object;
-};
+} & T;
 
 export type ErrorResponse<TFormFields = {}> = {
 	code: AvailableCodes;

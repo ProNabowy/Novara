@@ -7,7 +7,11 @@ import { useState } from "react";
 
 type CategoryOption = "default" | "ascending" | "descending";
 
-export default function CategoryOptions() {
+export default function CategoryOptions({
+	categories,
+}: {
+	categories: string[];
+}) {
 	const [selectedCategory, setSelectedCategory] =
 		useState<CategoryOption>("default");
 
@@ -22,21 +26,14 @@ export default function CategoryOptions() {
 				onChange={handleCategoryChange}
 				name="category-options"
 			>
-				<Radio
-					value="default"
-					label="Default"
-					checked={selectedCategory === "default"}
-				/>
-				<Radio
-					value="ascending"
-					label="Ascending"
-					checked={selectedCategory === "ascending"}
-				/>
-				<Radio
-					value="descending"
-					label="Descending"
-					checked={selectedCategory === "descending"}
-				/>
+				{categories.map((category) => (
+					<Radio
+						key={category}
+						value={category}
+						label={category}
+						checked={selectedCategory === category}
+					/>
+				))}
 			</RadioGroup>
 		</Accordion>
 	);

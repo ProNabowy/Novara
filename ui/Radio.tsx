@@ -71,11 +71,11 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
 					</div>
 					{label && (
 						<span
-							className={`ml-2 text-sm ${
+							className={`ml-2 text-sm capitalize ${
 								disabled ? "text-gray-400" : "text-gray-700"
 							}`}
 						>
-							{label}
+							{label.replace(/-/g, " ")}
 						</span>
 					)}
 				</label>

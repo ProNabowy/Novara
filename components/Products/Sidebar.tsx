@@ -3,7 +3,8 @@ import Note from "@/ui/Note";
 import CategoryOptions from "./CategoryOptions";
 import SortOptions from "./SortOptions";
 
-export default function Sidebar() {
+export default function Sidebar({ categories }: { categories: string[] }) {
+
 	return (
 		<aside className="space-y-3 rounded-sm">
 			<div className="border-primary-light flex items-center gap-2 rounded-full border bg-white px-4 py-2">
@@ -23,7 +24,7 @@ export default function Sidebar() {
 				unnecessary API calls.
 			</Note>
 
-			<CategoryOptions />
+			<CategoryOptions categories={categories} />
 
 			<SortOptions />
 		</aside>
