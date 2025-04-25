@@ -6,11 +6,8 @@ import { useEffect, useState } from "react";
 
 export default function Search() {
 	const [search, setSearch] = useState("");
-
 	const debouncedSearch = useDebounce(search, 500);
-
 	const searchParams = useSearchParams();
-
 	const router = useRouter();
 
 	const handleSearchQuery = () => {
@@ -31,20 +28,31 @@ export default function Search() {
 	}, [debouncedSearch]);
 
 	return (
-		<div className="border-primary-light flex items-center gap-2 rounded-full border bg-white px-4 py-2">
-			<label htmlFor="search" className="sr-only"></label>
+		<div
+			role="search"
+			aria-label="Product search"
+			className="border-primary-light flex items-center gap-2 rounded-full border bg-white px-4 py-2"
+		>
+			<label htmlFor="search" className="sr-only">
+				Search products
+			</label>
 			<input
-				type="text"
+				type="search"
 				name="search"
 				id="search"
 				className="w-px flex-1"
-				placeholder={"What are you looking for?"}
+				placeholder="What are you looking for?"
 				value={search}
 				onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
 					setSearch(event.target.value)
 				}
+				aria-label="Search products"
+				aria-describedby="searchDescription"
 			/>
-			<Magnifying className="size-4 fill-gray-600" />
+			<span id="searchDescription" className="sr-only">
+				Type to search for products. Results will update as you type.
+			</span>
+			<Magnifying className="size-4 fill-gray-600" aria-hidden="true" />
 		</div>
 	);
 }
