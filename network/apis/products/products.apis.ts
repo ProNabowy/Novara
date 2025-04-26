@@ -6,10 +6,18 @@ import { FetchProductsResponse } from "./types";
 export const fetchProducts = async (
 	skip: number,
 	category?: string,
-	sortBy?: string
+	order?: string
 ) => {
 	return await axios.get<SuccessResponse<FetchProductsResponse>>(
-		apis.products.list(skip, category, sortBy)
+		apis.products.list(category),
+		{
+			params: {
+				limit: 9,
+				skip,
+				sortBy: "title",
+				order,
+			},
+		}
 	);
 };
 
@@ -18,6 +26,13 @@ export const fetchProductsBySearch = async (
 	skip: number
 ) => {
 	return await axios.get<SuccessResponse<FetchProductsResponse>>(
-		apis.products.search(searchTerm, skip)
+		apis.products.search,
+		{
+			params: {
+				q: searchTerm,
+				limit: 9,
+				skip,
+			},
+		}
 	);
 };

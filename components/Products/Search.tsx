@@ -4,10 +4,13 @@ import { Magnifying } from "@/icons";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function Search() {
-	const [search, setSearch] = useState("");
+export default function Search({ searchTerm }: { searchTerm: string }) {
+	const [search, setSearch] = useState(searchTerm);
+
 	const debouncedSearch = useDebounce(search, 500);
+
 	const searchParams = useSearchParams();
+
 	const router = useRouter();
 
 	const handleSearchQuery = () => {

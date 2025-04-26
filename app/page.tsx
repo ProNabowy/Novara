@@ -24,19 +24,19 @@ export default async function ProductsPage({
 	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
 	const params = await searchParams;
+
 	const skip = Number(params.skip) || 0;
-	const category = Array.isArray(params.category)
-		? params.category[0]
-		: params.category || "";
-	const sortBy = Array.isArray(params.sortBy)
-		? params.sortBy[0]
-		: params.sortBy || "";
-	const searchTerm = Array.isArray(params.search)
-		? params.search[0]
-		: params.search || "";
+
+	const category = params.category as string;
+
+	const sortBy = params.sortBy as string;
+
+	const searchTerm = params.search as string;
 
 	const categories = await fetchCategories();
+
 	let products;
+
 	let pageTitle = "All Products";
 
 	switch (true) {
@@ -62,8 +62,10 @@ export default async function ProductsPage({
 				<Sidebar
 					categories={categories.data}
 					category={category}
+					searchTerm={searchTerm}
 					sortBy={sortBy}
 				/>
+
 				<ProductsContainer
 					products={products.data.products}
 					total={products.data.total}
